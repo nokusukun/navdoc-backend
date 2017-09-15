@@ -113,7 +113,37 @@ def transactions_get(apptid):
 @com.route("/get/<tid>")
 def transaction_get(tid):
     result = db.get_one(uid=tid)
+    appointment = masterdb.appointment.get_one(uid=result.source)
+    doctor = masterdb.account.get_one(uid=appointment.doctor)
+    user = masterdb.account.get_one(uid=appointment.user)
+    appointment.user = user.to_dict()
+    appointment.doctor = doctor.to_dict()
+    result.source = appointment.to_dict()
     return jsonify(result.to_dict())
+
+
+@com.route("/getall")
+def transaction_get_all():
+    if s_data()["userdata"]["account_type"] == "user":
+        appointments = masterdb.appointment.get_many(user=s_data()["userdata"]["uid"])
+    else:
+        appointments = masterdb.appointment.get_many(doctor=s_data()["userdata"]["uid"])
+
+    trans = []
+    for appt in appointments:
+        transactions = db.get_many(source=appt.uid)
+        for result in transactions:
+            appointment = masterdb.appointment.get_one(uid=result.source)
+            doctor = masterdb.account.get_one(uid=appointment.doctor)
+            user = masterdb.account.get_one(uid=appointment.user)
+            appointment.user = user.to_dict()
+            appointment.doctor = doctor.to_dict()
+            result.source = appointment.to_dict()
+            trans.append(result.to_dict())
+        #trans.extend([x.to_dict() for x in transactions])
+
+    print(trans)
+    return jsonify(trans)
 
 
 @com.route("/appt_ack/<apptid>")

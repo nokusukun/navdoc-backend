@@ -44,4 +44,4 @@ def e_400(e):
 
 
 
-app.run(host='10.10.10.54', port=2162, debug=True, threaded=True)
+app.run(host='0.0.0.0', port=2162, debug=True, threaded=True)

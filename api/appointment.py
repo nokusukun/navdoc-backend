@@ -174,7 +174,6 @@ def decline_appointment(appointment_id):
 
 
 
-
 @com.route("/update/<appointment_id>", methods=["POST"])
 @require_login
 def update_appointment(appointment_id):
