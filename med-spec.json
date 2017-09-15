@@ -1,0 +1,103 @@
+{
+    "Paediatrics": [
+        "Allergy and immunology",
+        "Paediatrics",
+        "Adolescent medicine",
+        "Paediatric allergology",
+        "Paediatric cardiology",
+        "Paediatric endocrinology and diabetes",
+        "Paediatric gastroenterology, hepatology and nutrition",
+        "Paediatric haematology and oncology",
+        "Paediatric infectious diseases",
+        "Neonatology",
+        "Paediatric nephrology",
+        "Paediatric respiratory medicine",
+        "Paediatric rheumatology"
+    ],
+    "Internal medicine": [
+        "Allergy and immunology",
+        "Internal medicine",
+        "Cardiology",
+        "Endocrinology",
+        "Gastroenterology",
+        "Geriatrics",
+        "Infectious disease",
+        "Vascular medicine",
+        "Nephrology",
+        "Neurology",
+        "Pulmonology",
+        "Psychiatry"
+    ],
+    "All": [
+        "Anaesthesiology",
+        "None",
+        "Aerospace medicine",
+        "Pathology",
+        "Dermatology-Venereology",
+        "General practice",
+        "Obstetrics and gynaecology",
+        "Health informatics",
+        "Internal medicine",
+        "Microbiology",
+        "Nuclear medicine",
+        "Occupational medicine",
+        "Ophthalmology",
+        "Orthodontics",
+        "Otorhinolaryngology",
+        "Paediatrics",
+        "Physical medicine and rehabilitation",
+        "Public Health",
+        "Radiation Oncology",
+        "Radiology",
+        "General surgery"
+    ],
+    "General surgery": [
+        "Cardiothoracic surgery",
+        "General surgery",
+        "Orthopaedics",
+        "Plastic, reconstructive and aesthetic surgery",
+        "Urology",
+        "Vascular surgery"
+    ],
+    "Psychiatry": [
+        "Child and adolescent psychiatry and psychotherapy",
+        "Psychiatry"
+    ],
+    "Neurology": [
+        "Clinical neurophysiology",
+        "Neurology"
+    ],
+    "General Surgery": [
+        "Colon and Rectal Surgery",
+        "General Surgery",
+        "Paediatric surgery"
+    ],
+    "Anaesthetics": [
+        "Emergency medicine",
+        "Anaesthetics"
+    ],
+    "Various": [
+        "Hospice and palliative medicine",
+        "Various"
+    ],
+    "Pediatrics": [
+        "Infectious disease",
+        "Pediatrics"
+    ],
+    "Radiology": [
+        "Interventional radiology",
+        "Radiology",
+        "Neuroradiology"
+    ],
+    "Surgery": [
+        "Neurosurgery",
+        "Surgery",
+        "Oral and maxillofacial surgery"
+    ],
+    "Family medicine": [
+        "Sports medicine",
+        "Family medicine",
+        "Geriatrics",
+        "Family medicine"
+    ]
+}

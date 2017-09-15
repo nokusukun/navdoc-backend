@@ -1,0 +1,47 @@
+[
+{
+    "account_type": "user",
+    "active": true,
+    "birthday": null,
+    "email": "test1@gmail.com",
+    "gender": null,
+    "join_date": 1505382628,
+    "last_saved_location": null,
+    "password": "password",
+    "phone_number": "09467899002",
+    "success": true,
+    "uid": "a30f6ce4c6081def",
+    "username": "Mark Calinao"
+}
+
+,
+{
+    "account_type": "user",
+    "active": true,
+    "birthday": null,
+    "email": "test2@gmail.com",
+    "gender": null,
+    "join_date": 1505382628,
+    "last_saved_location": null,
+    "password": "password",
+    "phone_number": "09487999002",
+    "success": true,
+    "uid": "a30f6ce4c6081def",
+    "username": "Niemark Braga"
+}
+
+,
+{
+    "account_type": "user",
+    "active": true,
+    "birthday": null,
+    "email": "test3@gmail.com",
+    "gender": null,
+    "join_date": 1505382628,
+    "last_saved_location": null,
+    "password": "password",
+    "phone_number": "09497999002",
+    "success": true,
+    "uid": "a30f6ce4c6081def",
+    "username": "Von Villamor"
+}]
