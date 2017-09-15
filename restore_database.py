@@ -449,7 +449,7 @@ for i in range(0,100):
             "city": "Iloilo",
             "province": "Iloilo",
             "address": f"{random.choice(range(1, 30))} {random.choice(names)} St. {random.choice(names)}",
-            "contact_number": f"+639{random.choice(range(10000000, 99999999))}",
+            "contact_number": f"+639{random.choice(range(100, 999))}{random.choice(range(100, 999))}{random.choice(range(100, 999))}",
             "coordinates": {
                     "lat": coordinates[0],
                     "lng": coordinates[1]
@@ -503,7 +503,8 @@ for i in range(10, 300):
     usr["hours"] = gen_hours()
     #09990-00099-999
     usr["pma"] = f"{random.choice(range(10000, 99999))}-{random.choice(range(10000, 99999))}-{random.choice(range(100, 999))}"
-    usr["specialty"] = random.choice(med_spec)
+    usr["field"] = random.choice(med_spec)
+    usr["specialty"] = usr["field"]
     usr["max_patients"] = random.choice(range(30, 80))
     usr["validated"] = random.choice([True, True, True, False])
     usr["online"] = random.choice([True, True, True, False])

@@ -41,10 +41,6 @@ def e_404(e):
 def e_400(e):
     return jsonify({"error":  e.description})
 
-@app.route("/")
-def index():
-    return jsonify({"info": "navdoc-backend portal, wtf are you doing here?"})
 
 
-
-app.run(host='192.168.43.126', port=2162, debug=True, threaded=True)
+app.run(host='10.10.10.72', port=2162, debug=True, threaded=True)

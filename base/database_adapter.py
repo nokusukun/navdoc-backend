@@ -65,7 +65,7 @@ class DBAccount(DBModel):
             self.add(account)
             return account
         # except:
-        #     return errors.db.e00
+        #     return errors.db.e0
 
 
 class DBClinic(DBModel):

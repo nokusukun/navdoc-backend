@@ -12,7 +12,7 @@ def is_jsonable(data):
 
 class Account(Master):
 
-    properties = ["uid", "username", "password", "join_date", "active", "account_type", "email"]
+    properties = ["uid", "username", "password", "join_date", "active", "account_type", "email", "bank_no"]
     model_type = "account"
 
     def __init__(self, data=None):
