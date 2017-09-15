@@ -3,6 +3,8 @@ import config
 import json
 import secrets
 import random
+import requests
+import config
 
 database = pymongo.MongoClient(config.DATABASE_URI).uhack
 account_names = ['Dianne Gibson',
@@ -430,6 +432,26 @@ def gen_hours():
     return data
 
 
+
+# 
+# curl --request POST \
+#   --url https://api-uat.unionbankph.com/hackathon/sb/test/accounts \
+#   --header 'accept: application/json' \
+#   --header 'content-type: application/json' \
+#   --header 'x-ibm-client-id: REPLACE_THIS_KEY' \
+#   --header 'x-ibm-client-secret: REPLACE_THIS_KEY' \
+#   --data '{"accountName":"sample string 1"}'
+# 
+
+request_account = lambda x: requests.post(f"https://api-uat.unionbankph.com/hackathon/sb/test/accounts", 
+                    headers={   'accept':'application/json', 
+                                'content-type':'application/json',
+                                'x-ibm-client-id': config.BANK_ID, 
+                                'x-ibm-client-secret': config.BANK_SECRET
+                            }, data=json.dumps({"accountName": x})).json()
+
+usr_bank = request_account("user-savings")
+doc_bank = request_account("docs-bank")
 database.account.drop()
 database.clinic.drop()
 
@@ -437,8 +459,10 @@ for usr in users:
     usr["uid"] = secrets.token_hex(8)
     usr["gender"] = random.choice(["male", "female"])
     usr["birthday"] = gen_bday()
+    usr["bank_no"] = usr_bank[0]["account_no"]
     print(f"Inserting user: {usr['uid']}")
     database.account.insert(usr)
+
 usr = {}
 usr["uid"] = secrets.token_hex(8)
 usr["account_type"] = "admin"
@@ -500,24 +524,28 @@ med_spec = [
 for i in range(10, 300):
     # ["hours", "pma", "field", "specialty", "prc", "prc_id", "clinic", "affiliation", "max_patients", "online", "validated"]
     usr = {}
-    usr["uid"] = secrets.token_hex(8)
-    usr["account_type"] = "doctor"
+    usr["uid"] = secrets.token_hex(10)
     usr["email"] = f"test{i}@gmail.com"
+    usr["password"] = "password"
+    usr["account_type"] = "doctor"
     usr["gender"] = random.choice(["male", "female"])
     usr["birthday"] = gen_bday()
     usr["username"] = f"{random.choice(first_name)} {random.choice(last_name)}"
     usr["clinic"] = random.choice(clinics)
     usr["hours"] = gen_hours()
-    usr["active"] = true
+    usr["rate"] = random.choice(range(200, 500))
     #09990-00099-999
     usr["pma"] = f"{random.choice(range(10000, 99999))}-{random.choice(range(10000, 99999))}-{random.choice(range(100, 999))}"
-    usr["specialty"] = random.choice(med_spec)
-    usr["field"] = usr["specialty"]
+    usr["field"] = random.choice(med_spec)
+    usr["specialty"] = usr["field"]
     usr["max_patients"] = random.choice(range(30, 80))
     usr["validated"] = random.choice([True, True, True, False])
     usr["online"] = random.choice([True, True, True, False])
+    usr["active"] = True
+    usr["bank_no"] = doc_bank[0]["account_no"]
 
-    print(f"Inserting doctor: {usr['uid']} {usr['clinic']}")
+    print(f"Inserting doctor: {usr['uid']}")
     database.account.insert(usr)
 
-
+print(doc_bank)
+print(usr_bank)

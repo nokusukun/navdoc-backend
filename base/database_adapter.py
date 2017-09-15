@@ -9,6 +9,7 @@ class DBModel():
 
     def __init__(self, m_db):
         self.collection = getattr(m_db, self.c_name)
+        print(f"Initalized {self.c_name} Collection: {self.collection}")
 
     def add(self, data):
         if isinstance(data, self.c_model):
@@ -89,3 +90,4 @@ class DBTransaction(DBModel):
     def __init__(self, m_db):
         self.c_name = "transaction"
         self.c_model = models.misc.Transaction
+        super().__init__(m_db)

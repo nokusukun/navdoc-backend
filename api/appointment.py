@@ -9,7 +9,7 @@ from models import misc
 from models import errors
 from base import utils
 from functools import wraps
-
+import arrow
 
 prefix = "/appointment"
 db = None
@@ -66,6 +66,7 @@ def request_appointment():
     new_appointment.user = s_data()["uid"]
     new_appointment.status = "pending"
     new_appointment.active = "true"
+    new_appointment.reason = ["None"]
     result = db.add(new_appointment)
 
     if errors.db.iserror(result):
@@ -84,22 +85,52 @@ def get_appointment(atype):
     else:
         data = db.get_many(doctor=s_data()["uid"], status=atype)
     print(data)
+    final = []
+    for d in data:
+        d = d.to_dict()
+        d["doctor"] = masterdb.account.get_one(uid=d["doctor"]).to_dict()
+        d["doctor"]["clinic"] = masterdb.clinic.get_one(uid=d["doctor"]["clinic"]).to_dict()
+        d["user"] = masterdb.account.get_one(uid=d["user"]).to_dict()
+        final.append(d)
 
     # if not data:
     #     abort(400, ["e00", "Appointment does not exist."])
 
-    return jsonify(data)
+    return jsonify(final)
+
+
+@com.route("/today", methods=["GET", "POST"])
+@require_login
+def get_appointment_today():
+    date = arrow.now().timestamp
+    if s_data()["userdata"]["account_type"] == "user":
+        d = db.get_many(user=s_data()["uid"], date=date)
+    else:
+        d = db.get_many(doctor=s_data()["uid"], date=date)
+    print(data)
+    d = d.to_dict()
+    d["doctor"] = masterdb.account.get_one(uid=d["doctor"]).to_dict()
+    d["doctor"]["clinic"] = masterdb.clinic.get_one(uid=d["doctor"]["clinic"]).to_dict()
+    d["user"] = masterdb.account.get_one(uid=d["user"]).to_dict()
+
+    # if not data:
+    #     abort(400, ["e00", "Appointment does not exist."])
+
+    return jsonify(d)
 
 
 @com.route("/get_single/<uid>", methods=["GET", "POST"])
 @require_login
 def get_appointment_solo(uid):
-    data = db.get_many(uid=uid)
+    d = db.get_one(uid=uid)
     print(data)
+    d["doctor"] = masterdb.account.get_one(uid=d["doctor"]).to_dict()
+    d["doctor"]["clinic"] = masterdb.clinic.get_one(uid=d["doctor"]["clinic"]).to_dict()
+    d["user"] = masterdb.account.get_one(uid=d["user"]).to_dict()
     # if not data:
     #     abort(400, ["e00", "Appointment does not exist."])
 
-    return jsonify(data)
+    return jsonify(d)
 
 
 @com.route("/accept/<appointment_id>", methods=["GET", "POST"])
@@ -122,10 +153,32 @@ def accept_appointment(appointment_id):
         abort(400, ["db00", "Unknown database error."])
 
 
+@com.route("/decline/<appointment_id>", methods=["GET", "POST"])
+@require_login
+def decline_appointment(appointment_id):
+    data = db.get_one(uid=appointment_id, status="pending")
+    print(data.to_dict())
+    if data.uid is None:
+        abort(400, ["e00", "Appointment does not exist."])
+
+    if data.doctor != s_data()["uid"]:
+        abort(400, ["e00", "Mismatching credentials. Authorization denied."])
+
+
+    result = db.update(data, {"status": "declined"})
+
+    if result:
+        return jsonify({"success": f"Appointment '{appointment_id} ' approved by doctor."})
+    else:
+        abort(400, ["db00", "Unknown database error."])
+
+
+
+
 @com.route("/update/<appointment_id>", methods=["POST"])
 @require_login
 def update_appointment(appointment_id):
-    filters = ["uid", "status", "user", "doctor", "timestamp"]
+    filters = ["uid", "status", "user", "timestamp"]
     new_data = request.get_json(force=True)
     for filt in filters:
         if filt in new_data:
@@ -147,11 +200,10 @@ def update_appointment(appointment_id):
         abort(400, ["db00", "Unknown database error."])
 
 
-
 @com.route("/finish/<appointment_id>", methods=["GET", "POST"])
 @require_login
 def finish_appointment(appointment_id):
-    data = db.get_one(uid=appointment_id, status="pending")
+    data = db.get_one(uid=appointment_id, status="approved")
     print(data.to_dict())
     if data.uid is None:
         abort(400, ["e00", "Appointment does not exist."])

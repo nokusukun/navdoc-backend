@@ -65,4 +65,4 @@ class Doctor(Account):
 
     def __init__(self, data=None):
         super().__init__(data)
-        self.properties.extend(["hours", "pma", "field", "specialty", "prc", "prc_id", "clinic", "affiliation", "max_patients", "online", "validated"])
+        self.properties.extend(["rate", "hours", "pma", "field", "specialty", "prc", "prc_id", "clinic", "affiliation", "max_patients", "online", "validated"])

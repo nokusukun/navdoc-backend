@@ -5,7 +5,7 @@ import secrets
 import json
 import pymongo
 import config
-from api import account, data, clinic, appointment, transaction
+from api import account, data, clinic, appointment, transaction, healthbot
 from base import database_adapter as dba
 from dotmap import DotMap
 
@@ -30,6 +30,7 @@ data.Load(app, None, session_server)
 clinic.Load(app, db_file, session_server)
 appointment.Load(app, db_file, session_server)
 transaction.Load(app, db_file, session_server)
+#healthbot.Load(app, db_file, session_server)
 
 
 @app.errorhandler(404)
@@ -43,4 +44,4 @@ def e_400(e):
 
 
 
-app.run(host='10.10.10.72', port=2162, debug=True, threaded=True)
+app.run(host='10.10.10.54', port=2162, debug=True, threaded=True)

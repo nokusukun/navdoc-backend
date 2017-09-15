@@ -493,7 +493,7 @@ for i in range(10, 300):
     # ["hours", "pma", "field", "specialty", "prc", "prc_id", "clinic", "affiliation", "max_patients", "online", "validated"]
     usr = {}
     usr["uid"] = secrets.token_hex(10)
-    usr["email"] = f"test{i}@g.com"
+    usr["email"] = f"test{i}@gmail.com"
     usr["password"] = "password"
     usr["account_type"] = "doctor"
     usr["gender"] = random.choice(["male", "female"])
@@ -501,6 +501,7 @@ for i in range(10, 300):
     usr["username"] = f"{random.choice(first_name)} {random.choice(last_name)}"
     usr["clinic"] = random.choice(clinics)
     usr["hours"] = gen_hours()
+    usr["rate"] = random.choice(range(200, 500))
     #09990-00099-999
     usr["pma"] = f"{random.choice(range(10000, 99999))}-{random.choice(range(10000, 99999))}-{random.choice(range(100, 999))}"
     usr["field"] = random.choice(med_spec)
