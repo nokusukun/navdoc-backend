@@ -48,6 +48,16 @@ def require_login(f):
             return f(*args, **kwargs)
     return wrap
 
+def require_admin(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        print(f"[{f.__name__}] This endpoint requires administrator permissions.")
+        if s_data()["userdata"]["account_type"] != "admin":
+            abort(400, ["e00", "Access Denied"])
+        return f
+    return wrap
+
+
 
 # Delete on production
 @com.route("/delete_all")
@@ -197,4 +207,36 @@ def doctors_get(uid):
 
     return jsonify(result.to_dict())
 
+
+
+@com.route("/doctors/ratings/<uid>", methods=["GET", "POST"])
+def doctors_ratings(uid):
+
+    result = masterdb.appointment.get_many(doctor=uid)
+    if not result[0].uid:
+        return jsonify([])
+
+    result = [{"rating": x["rating"], "feedback": x["feedback"]} for x in result]
+
     return jsonify(result)
+
+
+@com.route("/doctors/unvalidated", methods=["GET", "POST"])
+@require_admin
+@require_login
+def doctors_fetch_unvalidated():
+    result = db.get_many(validated=False)
+    return jsonify(result)
+
+
+@com.route("/doctors/approve/<uid>", methods=["GET", "POST"])
+@require_admin
+@require_login
+def doctors_approve(uid):
+
+    result = db.get_one(uid=uid)
+    if result.uid == None:
+        abort(400, errors.account.e04)
+
+    db.update(result, {"validated": True})
+    return jsonify(result.to_dict())

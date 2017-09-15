@@ -51,3 +51,27 @@ def require_login(f):
             print("Endpoint access success.")
             return f(*args, **kwargs)
     return wrap
+
+
+@com.route("/create", methods=["GET", "POST"])
+@require_login
+def transaction_add():
+    required = ["source", "ammount", "description"]
+    data = request.get_json(force=True)
+
+    new_transaction = misc.Transaction(data)
+    val = new_transaction.validate(required)
+    if val:
+        abort(400, errors.account.e02 + [val])
+
+    new_transaction.uid = secrets.token_hex(8)
+    new_transaction.author = s_data()["uid"]
+    new_transaction.active = True
+    result = db.add(new_transaction)
+
+    if errors.db.iserror(result):
+        abort(400, result)
+
+    new_transaction.__dict__["success"] = True
+    return jsonify(new_transaction.to_dict())
+

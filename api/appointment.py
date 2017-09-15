@@ -84,11 +84,20 @@ def get_appointment(atype):
         data = db.get_many(doctor=s_data()["uid"], status=atype)
     print(data)
 
-    if data[0].uid is None:
-        abort(400, ["e00", "Appointment does not exist."])
+    # if not data:
+    #     abort(400, ["e00", "Appointment does not exist."])
 
     return jsonify(data)
 
+@com.route("/get_single/<uid>", methods=["GET", "POST"])
+@require_login
+def get_appointment_solo(uid):
+    data = db.get_many(uid=uid)
+    print(data)
+    # if not data:
+    #     abort(400, ["e00", "Appointment does not exist."])
+
+    return jsonify(data)
 
 
 @com.route("/accept/<appointment_id>", methods=["GET", "POST"])
@@ -111,9 +120,15 @@ def accept_appointment(appointment_id):
         abort(400, ["db00", "Unknown database error."])
 
 
-@com.route("/update/<appointment_id>", methods=["GET", "POST"])
+@com.route("/update/<appointment_id>", methods=["POST"])
 @require_login
 def update_appointment(appointment_id):
+    filters = ["uid", "status", "user", "doctor", "timestamp"]
+    new_data = request.get_json(force=True)
+    for filt in filters:
+        if filt in new_data:
+            new_data.pop(filt)
+
     data = db.get_one(uid=appointment_id, status="pending")
     print(data.to_dict())
     if data.uid is None:
@@ -122,13 +137,13 @@ def update_appointment(appointment_id):
     if data.doctor != s_data()["uid"]:
         abort(400, ["e00", "Mismatching credentials. Authorization denied."])
 
-
-    result = db.update(data, {"status": "approved"})
+    result = db.update(data, new_data)
 
     if result:
         return jsonify({"success": f"Appointment '{appointment_id} ' approved by doctor."})
     else:
         abort(400, ["db00", "Unknown database error."])
+
 
 
 @com.route("/finish/<appointment_id>", methods=["GET", "POST"])
@@ -140,8 +155,8 @@ def finish_appointment(appointment_id):
         abort(400, ["e00", "Appointment does not exist."])
 
     if data.doctor != s_data()["uid"]:
-        abort(400, ["e00", "Mismatching credentials. Authorization denied."])
-
+        abort(400, 
+            ["e00", "Mismatching credentials. Authorization denied."])
 
     result = db.update(data, {"status": "done"})
 
@@ -152,22 +167,21 @@ def finish_appointment(appointment_id):
 
 
 
-@com.route("/reschedule/<appointment_id>", methods=["GET", "POST"])
+@com.route("/reschedule/<appointment_id>", methods=["POST"])
 @require_login
 def reschedule_appointment(appointment_id):
-    data = db.get_one(uid=appointment_id, status="pending")
+    new_data = request.get_json(force=True)
+    data = db.get_one(uid=appointment_id, status="approved")
     print(data.to_dict())
     if data.uid is None:
         abort(400, ["e00", "Appointment does not exist."])
 
-    if data.doctor != s_data()["uid"]:
-        abort(400, ["e00", "Mismatching credentials. Authorization denied."])
-
-
-    result = db.update(data, {"status": "done"})
+    data.date.append(new_data)
+    result = db.update(data, {"date": data.date})
 
     if result:
         return jsonify({"success": f"Appointment '{appointment_id} ' finished by doctor."})
     else:
         abort(400, ["db00", "Unknown database error."])
+
 

@@ -439,6 +439,13 @@ for usr in users:
     usr["birthday"] = gen_bday()
     print(f"Inserting user: {usr['uid']}")
     database.account.insert(usr)
+usr = {}
+usr["uid"] = secrets.token_hex(8)
+usr["account_type"] = "admin"
+usr["email"] = "admin@admin"
+usr["username"] = "Administrator Castrator"
+usr["password"] = "password"
+database.account.insert(usr)
 
 # Clinic
 clinics = []
@@ -501,9 +508,11 @@ for i in range(10, 300):
     usr["username"] = f"{random.choice(first_name)} {random.choice(last_name)}"
     usr["clinic"] = random.choice(clinics)
     usr["hours"] = gen_hours()
+    usr["active"] = true
     #09990-00099-999
     usr["pma"] = f"{random.choice(range(10000, 99999))}-{random.choice(range(10000, 99999))}-{random.choice(range(100, 999))}"
     usr["specialty"] = random.choice(med_spec)
+    usr["field"] = usr["specialty"]
     usr["max_patients"] = random.choice(range(30, 80))
     usr["validated"] = random.choice([True, True, True, False])
     usr["online"] = random.choice([True, True, True, False])
