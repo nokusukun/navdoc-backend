@@ -1,0 +1,58 @@
+Allergy and immunology	Paediatrics or Internal medicine	Both	I	All	O
+Adolescent medicine	Paediatrics	Both	I	Paediatric	T
+Anaesthesiology	None	T	Unknown	All	Both
+Aerospace medicine	None	Both	Neither	All	Both
+Pathology	None	D	Neither	All	T
+Cardiology	Internal medicine	T	I	Adults	O
+Cardiothoracic surgery	General surgery	T	S	Adults	O
+Child and adolescent psychiatry and psychotherapy	Psychiatry	T	I	Paediatric	T
+Clinical neurophysiology	Neurology	D	I	All	Both
+Colon and Rectal Surgery	General Surgery	Both	S	All	O
+Dermatology-Venereology	None	T	I	All	O
+Emergency medicine	Anaesthetics	Both	I	All	Both
+Endocrinology	Internal medicine	T	I	Adults	O
+Gastroenterology	Internal medicine	T	I	Adults	O
+General practice	None	Both	Neither	All	Multidisciplinary
+Geriatrics	Internal medicine or family medicine	T	I	Geriatric	Multidisciplinary
+Obstetrics and gynaecology	None	T	S	All	O
+Health informatics	None	Both	Neither	All	Multidisciplinary
+Hospice and palliative medicine	Various	Both	Neither	All	Neither
+Infectious disease	Pediatrics or Internal medicine	Both	I	All	Neither
+Internal medicine	None	T	I	Adults	Neither
+Interventional radiology	Radiology	Both	Unknown	All	Multidisciplinary
+Vascular medicine	Internal medicine	T	I	Adults	O
+Microbiology	None	D	I	All	T
+Nephrology	Internal medicine	T	I	All	O
+Neurology	Internal medicine	T	I	All	O
+Neurosurgery	Surgery	T	S	All	O
+Nuclear medicine	None	Both	I	All	T
+Occupational medicine	None	T	I	Adults	Multidisciplinary
+Ophthalmology	None	T	S	All	O
+Orthodontics	None	T	S	All	O
+Orthopaedics	General surgery	T	S	All	O
+Oral and maxillofacial surgery	Surgery	T	S	All	O
+Otorhinolaryngology	None	T	S	All	O
+Paediatrics	None	T	I	Paediatric	Neither
+Paediatric allergology	Paediatrics	T	I	Paediatric	O
+Paediatric cardiology	Paediatrics	T	I	Paediatric	O
+Paediatric endocrinology and diabetes	Paediatrics	T	I	Paediatric	O
+Paediatric gastroenterology, hepatology and nutrition	Paediatrics	T	I	Paediatric	O
+Paediatric haematology and oncology	Paediatrics	T	I	Paediatric	O
+Paediatric infectious diseases	Paediatrics	T	I	Paediatric	O
+Neonatology	Paediatrics	T	I	Neonatal	Neither
+Paediatric nephrology	Paediatrics	T	I	Paediatric	O
+Paediatric respiratory medicine	Paediatrics	T	I	Paediatric	O
+Paediatric rheumatology	Paediatrics	T	I	Paediatric	O
+Paediatric surgery	General Surgery	T	S	Paediatric	O
+Physical medicine and rehabilitation	None	T	I	All	Multidisciplinary
+Plastic, reconstructive and aesthetic surgery	General surgery	T	S	All	O
+Pulmonology	Internal medicine	T	I	Adults	O
+Psychiatry	Internal medicine	T	I	All	T
+Public Health	None	Neither	Neither	All	T
+Radiation Oncology	None	T	Neither	All	T
+Radiology	None	Both	I	All	T
+Sports medicine	Family medicine	Both	Neither	All	Multidisciplinary
+Neuroradiology	Radiology	Both	I	All	Both
+General surgery	None	T	S	Adults	T
+Urology	General surgery	T	S	All	O
+Vascular surgery	General surgery
