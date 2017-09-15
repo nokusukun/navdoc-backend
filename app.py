@@ -5,7 +5,8 @@ import secrets
 import json
 import pymongo
 import config
-
+from api import account, data, clinic, appointment, transaction
+from base import database_adapter as dba
 from dotmap import DotMap
 
 app = Flask(__name__, static_url_path='')
@@ -15,6 +16,20 @@ database = pymongo.MongoClient(config.DATABASE_URI).uhack
 session_server = {}
 
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
+db_file = DotMap({})
+db_file.account = dba.DBAccount(database)
+db_file.clinic = dba.DBClinic(database)
+db_file.appointment = dba.DBAppointment(database)
+db_file.transaction = dba.DBTransaction(database)
+
+###################################
+#   view types gets loaded here   #
+###################################
+account.Load(app, db_file, session_server)
+data.Load(app, None, session_server)
+clinic.Load(app, db_file, session_server)
+appointment.Load(app, db_file, session_server)
+transaction.Load(app, db_file, session_server)
 
 
 @app.errorhandler(404)
