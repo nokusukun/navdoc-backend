@@ -5,7 +5,11 @@ from models.master import Master
 
 class Appointment(Master):
 
-    properties = ["uid", "status", "user", "patient_info", "doctor", "date", "appt_type", "address", "remarks", "prescription", "timestamp", "rating", "feedback"]
+    properties = ["uid", "status", "user", 
+        "patient_info", "doctor", "date", 
+        "address", "remarks", "prescription", 
+        "timestamp", "rating", "feedback",
+        "purpose", "active"]
     # available statuses: [pending, approved, done]
     # appt_type: [clinic, house]
     model_type = "appointment"

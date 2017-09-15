@@ -22,7 +22,7 @@ s_data = lambda : sess[request.headers["Session-Token"]]
 
 def Load(_app, _db, session_data):
     global db, sess, masterdb
-    db      = _db.account
+    db      = _db.appointment
     app     = _app
     masterdb= _db
     sess = session_data
@@ -50,7 +50,7 @@ def require_login(f):
 @com.route("/request", methods=["GET", "POST"])
 @require_login
 def request_appointment():
-    required = ["doctor", "date", "appt_type", "address"]
+    required = ["doctor", "date", "purpose"]
     data = request.get_json(force=True)
     doctor_data = masterdb.account.get_one(uid=data["doctor"], account_type="doctor")
 
@@ -65,6 +65,7 @@ def request_appointment():
     new_appointment.uid = secrets.token_hex(8)
     new_appointment.user = s_data()["uid"]
     new_appointment.status = "pending"
+    new_appointment.active = "true"
     result = db.add(new_appointment)
 
     if errors.db.iserror(result):
@@ -88,6 +89,7 @@ def get_appointment(atype):
     #     abort(400, ["e00", "Appointment does not exist."])
 
     return jsonify(data)
+
 
 @com.route("/get_single/<uid>", methods=["GET", "POST"])
 @require_login
