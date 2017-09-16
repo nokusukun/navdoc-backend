@@ -122,9 +122,10 @@ def get_appointment_today():
 @com.route("/get_single/<uid>", methods=["GET", "POST"])
 @require_login
 def get_appointment_solo(uid):
-    d = db.get_one(uid=uid)
-    print(data)
+    d = db.get_one(uid=uid).to_dict()
+    print(d)
     d["doctor"] = masterdb.account.get_one(uid=d["doctor"]).to_dict()
+    print(d["doctor"])
     d["doctor"]["clinic"] = masterdb.clinic.get_one(uid=d["doctor"]["clinic"]).to_dict()
     d["user"] = masterdb.account.get_one(uid=d["user"]).to_dict()
     # if not data:
